@@ -28,16 +28,25 @@ hr {
   margin: 1.5rem 0 1rem 0;
 }
 
-.internal-link {
-  color: coral;
+.internal-link, .external-link {
   cursor: pointer;
   text-decoration: none;
   font-weight: bold;
   font-size: 1.2rem;
   transition: color 0.2s ease-in-out;
 }
-.internal-link:hover {
+.internal-link:hover, .external-link:hover {
   color: whitesmoke;
+}
+
+.internal-link {
+  color: coral;
+}
+
+.external-link {
+  font-weight: normal;
+  color: olive;
+  padding: 0;
 }
 
 #root {

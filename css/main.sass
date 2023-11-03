@@ -24,8 +24,7 @@ hr
     width: 40px
     margin: 1.5rem 0 1rem 0
 
-.internal-link
-    color: coral
+.internal-link, .external-link
     cursor: pointer
     text-decoration: none
     font-weight: bold
@@ -34,7 +33,12 @@ hr
 
     &:hover
         color: whitesmoke
-
+.internal-link
+    color: coral
+.external-link
+    font-weight: normal
+    color: olive
+    padding: 0
 #root
     display: flex
     height: 100%
