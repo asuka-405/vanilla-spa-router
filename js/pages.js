@@ -18,7 +18,7 @@ const Pages = {
     },
   },
   lorem: {
-    url: "../pages/qwerty.htm",
+    url: "../pages/lorem.htm",
     onmount: () => {
       console.log("lorem mounted")
     },
@@ -26,13 +26,13 @@ const Pages = {
       console.log("lorem unmounted")
     },
   },
-  qwerty: {
+  loader: {
     url: "../pages/loader.htm",
     onmount: () => {
-      console.log("qwerty mounted")
+      console.log("loader mounted")
     },
     onunmount: () => {
-      console.log("qwerty unmounted")
+      console.log("loader unmounted")
     },
   },
 }

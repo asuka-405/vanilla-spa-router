@@ -14,23 +14,40 @@ function loadLinks(linkContainer) {
     .forEach((a) => a.addEventListener("click", (e) => linkHandler(e)))
 }
 
+function activateLink(element, tab) {
+  element.querySelectorAll(".internal-link").forEach((item) => {
+    if (item.getAttribute("tab") === tab) {
+      item.classList.add("active")
+    } else {
+      item.classList.remove("active")
+    }
+    console.log(item)
+  })
+}
+
 function linkHandler(e) {
   e = e || window.event
   e.preventDefault()
 
-  history.pushState({}, "", `index.html?tab=${e.target.getAttribute("tab")}`)
-  locationHandler()
+  const prevTab = new URLSearchParams(location.search).get("tab")
+  const tab = e.target.getAttribute("tab")
+
+  if (tab === prevTab) return
+
+  history.pushState({}, "", `index.html?tab=${tab}`)
+  locationHandler(prevTab)
 }
 
-function locationHandler() {
+function locationHandler(prevTab) {
+  if (pages[prevTab] && pages[prevTab].onunmount) {
+    pages[prevTab].onunmount()
+  }
+
   const tab = new URLSearchParams(location.search).get("tab")
   if (!tab) {
     history.pushState({}, "", "index.html?tab=home")
     return locationHandler()
   }
-  Object.values(pages).forEach((page) => {
-    if (page.onunmount) page.onunmount()
-  })
   const page = pages[tab] || { url: "./pages/404.htm" }
   root.innerHTML = loader
   fetch(page.url)
@@ -39,16 +56,11 @@ function locationHandler() {
       root.innerHTML = html
       if (page.onmount) page.onmount()
       loadLinks(root)
+      activateLink(root, tab)
     })
 
   // Add class active to clicked internal-link and remove from others
-  document.querySelectorAll(".sidebar-actions__item").forEach((item) => {
-    if (item.querySelector("a").getAttribute("tab") === tab) {
-      item.classList.add("active")
-    } else {
-      item.classList.remove("active")
-    }
-  })
+  activateLink(document, tab)
 }
 
 const Router = {
